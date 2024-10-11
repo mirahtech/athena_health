@@ -79,6 +79,13 @@ module AthenaHealth
           )
         end
 
+        define_method("delete_#{subscription_type[:name]}_subscription") do |practice_id:|
+          @api.call(
+            endpoint: "#{practice_id}/#{subscription_type[:path]}/changed/subscription",
+            method: :delete
+          )
+        end
+
         define_method("changed_#{subscription_type[:plural_name]}") do |practice_id:, department_id: nil, params: {}|
           params[:departmentid] = department_id unless department_id.nil?
           response = @api.call(

@@ -71,11 +71,12 @@ module AthenaHealth
           Subscription.new(response)
         end
 
-        define_method("create_#{subscription_type[:name]}_subscription") do |practice_id:, params: {}|
+        define_method("create_#{subscription_type[:name]}_subscription") do |practice_id:, params: {}, body: {}|
           @api.call(
             endpoint: "#{practice_id}/#{subscription_type[:path]}/changed/subscription",
             method: :post,
-            params: params
+            params: params,
+            body: body
           )
         end
 

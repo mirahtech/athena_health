@@ -3,6 +3,7 @@ require 'virtus'
 
 require 'athena_health/version'
 require 'athena_health/connection'
+require 'athena_health/auth_token'
 require 'athena_health/error'
 require 'athena_health/endpoints/practices'
 require 'athena_health/endpoints/departments'
@@ -37,6 +38,7 @@ require 'athena_health/appointment_type_collection'
 require 'athena_health/appointment'
 require 'athena_health/appointment_waitlist'
 require 'athena_health/appointment_collection'
+require 'athena_health/gender_identity_field_collection'
 require 'athena_health/insurance_package'
 require 'athena_health/insurance_package_collection'
 require 'athena_health/patient_appointment_reason'
@@ -79,8 +81,10 @@ require 'athena_health/user_medication_sig'
 require 'athena_health/user_medication'
 require 'athena_health/user_medication_collection'
 require 'athena_health/subscription'
-require 'athena_health/claim/claim'
-require 'athena_health/claim/claim_collection'
+
+require 'athena_health/models/claim/claim'
+require 'athena_health/models/screening_questionnaire/screening_questionnaire_collection'
+require 'athena_health/models/screening_questionnaire/screening_questionnaire_template_collection'
 
 module AthenaHealth
 end

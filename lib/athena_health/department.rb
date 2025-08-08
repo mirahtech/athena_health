@@ -27,5 +27,6 @@ module AthenaHealth
     attribute :zip,                          String
     attribute :communicatorbrandid,          Integer
     attribute :providerlist,                 Array
+    attribute :timezonename,                 String
   end
 end

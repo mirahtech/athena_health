@@ -1,98 +1,42 @@
 require 'spec_helper'
+require 'timecop'
 
 describe AthenaHealth::Connection do
   let(:connection_attributes) do
     {
-      version: version,
-      key: 'test_key',
-      secret: 'test_secret'
+      token: token,
+      base_url: AthenaHealth::Client.base_url(production: production),
+      api_version: AthenaHealth::Client::API_VERSION
     }
   end
 
-  let(:connection) { AthenaHealth::Connection.new(connection_attributes) }
-
-  it 'has defined BASE_URL constant' do
-    expect(AthenaHealth::Connection::BASE_URL)
-      .to eq 'https://api.athenahealth.com'
+  let(:token) do
+    AthenaHealth::AuthToken.new(
+      client_id: 'test_key',
+      secret: 'test_secret',
+      auth_token_hash: auth_token_hash,
+      base_url: AthenaHealth::Client.base_url(production: production),
+      api_version: AthenaHealth::Client::API_VERSION
+    )
   end
 
-  context 'when base_url is not defined' do
-    let(:connection_attributes) do
-      {
-        version: 'v1',
-        key: 'test_key',
-        secret: 'test_secret'
-      }
-    end
-
-    it 'base_url defaults to constant BASE_URL' do
-      expect(connection.instance_variable_get(:@base_url))
-        .to eq AthenaHealth::Connection::BASE_URL
-    end
+  let(:production) { true }
+  let(:key_result) { 'unset key_result' }
+  let(:auth_token_hash) do
+    {
+      'access_token' => key_result,
+      'expires_at' => Time.now.to_i + 3600
+    }
   end
+  let(:freeze_time) { Time.at(1_673_280_861) }
 
-  context 'when base_url is defined' do
-    let(:connection_attributes) do
-      {
-        version: 'v1',
-        key: 'test_key',
-        secret: 'test_secret',
-        base_url: 'https://apitest.athenahealth.com'
-      }
-    end
-
-    it 'base_url overrides constant BASE_URL' do
-      expect(connection.instance_variable_get(:@base_url))
-        .to eq 'https://apitest.athenahealth.com'
-    end
-  end
-
-  it 'has defined AUTH_PATH constant' do
-    expect(AthenaHealth::Connection::AUTH_PATH)
-      .to eq(
-        'v1' => 'oauth',
-        'preview1' => 'oauthpreview',
-        'openpreview1' => 'oauthopenpreview'
-      )
-  end
-
-  describe '#authenticate' do
-    context 'when version is preview1' do
-      let(:version) { 'v1' }
-
-      it 'returns token' do
-        VCR.use_cassette('v1_authentication') do
-          expect(connection.authenticate).to eq 'test_access_token'
-        end
-      end
-    end
-
-    context 'when version is preview1' do
-      let(:version) { 'preview1' }
-
-      it 'returns token' do
-        VCR.use_cassette('preview1_authentication') do
-          expect(connection.authenticate).to eq 'test_access_token'
-        end
-      end
-    end
-
-    context 'when version is openpreview1' do
-      let(:version) { 'openpreview1' }
-
-      it 'returns token' do
-        VCR.use_cassette('openpreview1_authentication') do
-          expect(connection.authenticate).to eq 'test_access_token'
-        end
-      end
-    end
-  end
+  let(:connection) { AthenaHealth::Connection.new(**connection_attributes) }
 
   describe '#call' do
-    let(:version)       { 'preview1' }
+    let(:production)       { false }
     let(:response_body) { '{"body":"value"}' }
     let(:request)       { instance_double(Typhoeus::Request) }
-
+    let(:key_result) { 'test_access_token' }
     let(:response) do
       instance_double(
         Typhoeus::Response,
@@ -107,7 +51,7 @@ describe AthenaHealth::Connection do
       end
 
       expect(Typhoeus::Request).to receive(:new).with(
-        'https://api.athenahealth.com/preview1/test_endpoint',
+        'https://api.preview.platform.athenahealth.com/v1/test_endpoint',
         method: :get,
         headers: { 'Authorization' => 'Bearer test_access_token' },
         params: {},

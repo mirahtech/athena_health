@@ -27,6 +27,7 @@ describe AthenaHealth::Practice do
       'ecommercecreditcardtypes': ['AX', 'DS', 'MC', 'VI'],
       'zip': '12020',
       'communicatorbrandid': '1',
+      'timezonename': 'America/New_York',
       'providerlist': ['1', '2']
     }
   end
@@ -61,6 +62,7 @@ describe AthenaHealth::Practice do
       ecommercecreditcardtypes: ['AX', 'DS', 'MC', 'VI'],
       zip: '12020',
       communicatorbrandid: 1,
+      timezonename: 'America/New_York',
       providerlist: ['1', '2']
     )
   end

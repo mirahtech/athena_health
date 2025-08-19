@@ -8,3 +8,5 @@
 /spec/reports/
 /tmp/
 .idea
+.vscode/settings.json
+*.DS_Store

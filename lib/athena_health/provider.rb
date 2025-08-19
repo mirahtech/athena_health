@@ -11,11 +11,13 @@ module AthenaHealth
     attribute :lastname,             String
     attribute :providerid,           Integer
     attribute :providerusername,     String
+    attribute :providergrouplist,    String
     attribute :ansispecialtycode,    String
     attribute :hideinportal,         Boolean
     attribute :entitytype,           String
     attribute :npi,                  Integer
     attribute :providertype,         String
+    attribute :usualdepartmentid,    Integer
     attribute :otherprovideridlist,  Array[String]
 
     def fullname

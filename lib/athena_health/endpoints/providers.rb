@@ -2,13 +2,13 @@ module AthenaHealth
   module Endpoints
     module Providers
       def all_providers(practice_id:, params: {})
-        
+
         # This is going to hold all of the providers we get in batches.
         providers = []
-        
+
         # We're going to be batching, so these will keep track of our progress.
         more = true
-        offset = 0 
+        offset = 0
         page_size = 1500 # The default page size is 1500, we don't handle custom page sizes.
 
         while more do
@@ -31,7 +31,7 @@ module AthenaHealth
           if offset > response["totalcount"]
             more = false
           end
-        end        
+        end
 
         ProviderCollection.new({providers:})
       end

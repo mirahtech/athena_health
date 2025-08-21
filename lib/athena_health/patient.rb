@@ -101,6 +101,7 @@ module AthenaHealth
     attribute :altfirstname,                         String
     attribute :assignedsexatbirth,                   String
     attribute :preferredpronouns,                    String
+    attribute :providergroupid,                      Integer
 
     def fullname
       "#{firstname} #{middlename} #{lastname}"

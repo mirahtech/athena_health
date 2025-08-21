@@ -11,7 +11,7 @@ module AthenaHealth
     attribute :lastname,             String
     attribute :providerid,           Integer
     attribute :providerusername,     String
-    attribute :providergrouplist,    String
+    attribute :providergrouplist,    Array[String]
     attribute :ansispecialtycode,    String
     attribute :hideinportal,         Boolean
     attribute :entitytype,           String

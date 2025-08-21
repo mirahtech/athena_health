@@ -16,8 +16,8 @@ module AthenaHealth
           # response has the following structure:
           # {
           #   "providers": [...],
-          #   "totalcount": 12820,
-          #   "next": "/v1/8042/providers?SHOWALLPROVIDERIDS=true&offset=1500"
+          #   "totalcount": 10000,
+          #   "next": "/v1/{practice_id}/providers?SHOWALLPROVIDERIDS=true&offset=1500"
           # }
           response = @api.call(
             endpoint: "#{practice_id}/providers",

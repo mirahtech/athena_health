@@ -182,6 +182,34 @@ module AthenaHealth
         )['encounterdocumentid']
       end
 
+      def create_patient_clinical_document(
+        practice_id:,
+        department_id:,
+        patient_id:,
+        document_subclass:,
+        attachment_contents: nil,
+        attachment_type:,
+        content_type:,
+        params: {}
+      )
+        body = params.merge(
+          {
+            departmentid: department_id.to_s,
+            documentsubclass: document_subclass,
+            attachmentcontents: attachment_contents,
+            attachmenttype: attachment_type,
+            contenttype: content_type
+          }.reject { |_k, v| v.nil? }
+        )
+
+        @api.call(
+          endpoint: "#{practice_id}/patients/#{patient_id}/documents/clinicaldocument",
+          method: :post,
+          body: body
+        )['clinicaldocumentid']
+      end
+
+
       def patient_default_pharmacy(practice_id:, department_id:, patient_id:)
         response = @api.call(
           endpoint: "#{practice_id}/chart/#{patient_id}/pharmacies/default",

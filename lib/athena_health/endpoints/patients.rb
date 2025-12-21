@@ -209,6 +209,13 @@ module AthenaHealth
         )['clinicaldocumentid']
       end
 
+      def get_patient_clinical_document(practice_id:, patient_id:,clinical_document_id:)
+        @api.call(
+          endpoint: "#{practice_id}/patients/#{patient_id}/documents/clinicaldocument/#{clinical_document_id}/originaldocument",
+          method: :get,
+          raw_body: true
+        )
+      end
 
       def patient_default_pharmacy(practice_id:, department_id:, patient_id:)
         response = @api.call(

@@ -8,7 +8,7 @@ module AthenaHealth
       @base_url = base_url
     end
 
-    def call(endpoint:, method:, params: {}, body: {}, second_call: false)
+    def call(endpoint:, method:, params: {}, body: {}, second_call: false, raw_body: false)
       response = Typhoeus::Request.new(
         "#{@base_url}/#{@api_version}/#{endpoint}",
         method: method,
@@ -31,6 +31,10 @@ module AthenaHealth
       raise AthenaHealth::ValidationError, json_response(body) if [400, 409].include? response.response_code
 
       AthenaHealth::Error.new(code: response.response_code).render if response.response_code != 200
+
+      if raw_body
+        return body
+      end
 
       json_response(body)
     end

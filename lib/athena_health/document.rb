@@ -18,5 +18,8 @@ module AthenaHealth
     attribute :orderid,              Integer
     attribute :labresultid,          Integer
     attribute :observations,         Array[Analyte]
+    attribute :clinicaldocumentid,   String
+    attribute :documentid,           String
+    attribute :originalfilename,     String
   end
 end

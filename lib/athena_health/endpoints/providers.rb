@@ -19,10 +19,13 @@ module AthenaHealth
           #   "totalcount": 10000,
           #   "next": "/v1/{practice_id}/providers?SHOWALLPROVIDERIDS=true&offset=1500"
           # }
+          # Omit offset on the first call so the URL matches the unparameterized
+          # form (Athena treats a missing offset as 0).
+          page_params = offset.zero? ? params : params.merge({ offset: })
           response = @api.call(
             endpoint: "#{practice_id}/providers",
             method: :get,
-            params: params.merge({offset:})
+            params: page_params
           )
 
           providers = providers.concat(response["providers"] || [])

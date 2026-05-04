@@ -16,7 +16,7 @@ module AthenaHealth
   class IncorrectPermissionsError < StandardError
     attr_reader :details
 
-    def initialize(details)
+    def initialize(details = nil)
       @details = details
     end
   end

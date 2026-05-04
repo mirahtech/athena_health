@@ -19,10 +19,13 @@ module AthenaHealth
           #   "totalcount": 1234,
           #   "next": "/v1/{practice_id}/documenttypes?offset=500&limit=500"
           # }
+          # Always send the larger page size, but skip offset on the first call
+          # so the URL stays simple (Athena treats a missing offset as 0).
+          page_params = offset.zero? ? params.merge({ limit: page_size }) : params.merge({ offset:, limit: page_size })
           response = @api.call(
             endpoint: "#{practice_id}/documenttypes",
             method: :get,
-            params: params.merge({ offset:, limit: page_size })
+            params: page_params
           )
 
           document_types = document_types.concat(response["documenttypes"] || [])

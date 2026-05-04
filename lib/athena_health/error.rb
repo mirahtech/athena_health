@@ -1,6 +1,5 @@
 module AthenaHealth
   class UnauthorizedError         < StandardError; end
-  class IncorrectPermissionsError < StandardError; end
   class ForbiddenError            < StandardError; end
   class NotFoundError             < StandardError; end
   class InternalServerError       < StandardError; end
@@ -10,6 +9,14 @@ module AthenaHealth
     attr_reader :details
 
     def initialize(details)
+      @details = details
+    end
+  end
+
+  class IncorrectPermissionsError < StandardError
+    attr_reader :details
+
+    def initialize(details = nil)
       @details = details
     end
   end

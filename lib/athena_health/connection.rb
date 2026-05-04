@@ -27,7 +27,6 @@ module AthenaHealth
       end
 
       body = response.response_body
-      puts 'body: ' + body
 
       raise AthenaHealth::ValidationError, json_response(body) if [400, 409].include? response.response_code
 

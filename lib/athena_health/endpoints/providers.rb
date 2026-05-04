@@ -25,10 +25,10 @@ module AthenaHealth
             params: params.merge({offset:})
           )
 
-          providers = providers.concat(response["providers"])
+          providers = providers.concat(response["providers"] || [])
 
           offset += page_size
-          if offset > response["totalcount"]
+          if offset >= response["totalcount"]
             more = false
           end
         end
